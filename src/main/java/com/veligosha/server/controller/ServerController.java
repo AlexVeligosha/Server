@@ -1,20 +1,44 @@
 package com.veligosha.server.controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import com.veligosha.server.entity.Test;
+import com.veligosha.server.entity.User;
+import com.veligosha.server.repository.TestRepository;
+import com.veligosha.server.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
-@Controller
-@RequestMapping("/server")
+@RestController
+@RequestMapping(value = "/server")
 public class ServerController {
 
-    @RequestMapping(value = "/get", method = RequestMethod.GET)
+    @Autowired
+    UserRepository userRepository;
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     @ResponseBody
-    public String getValue(ModelMap model){
-        return "My string";
+    public List<User> getAllUser(){
+        return userRepository.findAll();
     }
+
+/**
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public User getUser(@PathVariable long id){
+        return service.findOne(id);
+    }
+
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public User saveUser(@RequestBody User user){
+        return service.save(user);
+    }
+
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public void delete(@PathVariable long id){
+        service.delete(id);
+    }*/
 }
