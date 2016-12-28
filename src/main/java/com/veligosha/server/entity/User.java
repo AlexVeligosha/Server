@@ -1,7 +1,12 @@
 package com.veligosha.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Simple JavaBean objecct that represent a User
@@ -16,7 +21,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(name = "username")
+    @Column(name = "username", unique = true)
     private String username;
 
     @Column(name = "password")
@@ -24,6 +29,11 @@ public class User {
 
     @Transient
     private String confirmPassword;
+
+    //@JsonBackReference
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    private List<Activity> activities;
 
     public User() {
     }
@@ -61,4 +71,14 @@ public class User {
         this.confirmPassword = confirmPassword;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", activities=" + activities +
+                '}';
+    }
 }
