@@ -1,11 +1,8 @@
 package com.veligosha.server.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.time.Period;
 import java.util.Date;
 
 @Entity
@@ -15,7 +12,7 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "start", nullable = false)
@@ -24,9 +21,8 @@ public class Activity {
     @Column(name = "duration", nullable = false)
     private int duration;
 
-    //@JsonManagedReference
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @JoinColumn(name = "user_id", nullable = false) //nullable is not necessary
     private User user;
 
     public Activity() {
@@ -62,6 +58,7 @@ public class Activity {
 
     public void setUser(User user) {
         this.user = user;
+
     }
 
     @Override

@@ -31,7 +31,7 @@ public class User {
     private String confirmPassword;
 
     //@JsonBackReference
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Column(nullable = true)
     private List<Activity> activities;
 

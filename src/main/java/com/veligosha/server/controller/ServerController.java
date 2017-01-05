@@ -1,11 +1,7 @@
 package com.veligosha.server.controller;
 
 import com.veligosha.server.entity.Activity;
-import com.veligosha.server.entity.Test;
 import com.veligosha.server.entity.User;
-import com.veligosha.server.repository.ActivityRepository;
-import com.veligosha.server.repository.TestRepository;
-import com.veligosha.server.repository.UserRepository;
 import com.veligosha.server.service.ActivityServiceImpl;
 import com.veligosha.server.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +31,12 @@ public class ServerController {
     @ResponseBody
     public List<Activity> getAllActivity(){
         return activityService.getAll();
+    }
+
+    @RequestMapping(value = "/firstactivity", method = RequestMethod.GET)
+    @ResponseBody
+    public Activity getActivity() {
+        return activityService.getActivityById(1);
     }
 
     @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)

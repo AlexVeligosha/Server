@@ -1,6 +1,7 @@
 package com.veligosha.server.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +25,9 @@ public class WebConfig  extends WebMvcConfigurerAdapter{
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        converter.setObjectMapper(new ObjectMapper());
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new Hibernate4Module());
+        converter.setObjectMapper(mapper);
         converter.setSupportedMediaTypes(Collections.singletonList(MediaType.APPLICATION_JSON));
         converters.add(converter);
     }
